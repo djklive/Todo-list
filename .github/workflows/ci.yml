@@ -30,11 +30,14 @@ jobs:
       - name: Build Docker image
         run: docker build -t todo-list-app .  # Construire l'image Docker
 
-      - name: Push Docker image to registry
+      - name: Login to Docker Hub
         run: |
           echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-          docker tag todo-list-app your-docker-repo/todo-list-app:latest
-          docker push your-docker-repo/todo-list-app:latest  # Pousse l'image vers le registre
+
+      - name: Push Docker image to registry
+        run: |
+          docker tag todo-list djklive/todo-list:latest
+          docker push djklive/todo-list:latest  # Pousse l'image vers le registre
 
       #- name: Deploy with Docker Compose
       #  run: |
