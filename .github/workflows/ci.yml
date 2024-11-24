@@ -33,11 +33,17 @@ jobs:
       - name: Login to Docker Hub
         run: |
           echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-
+      
+      - name: List Docker images
+        run: docker images  # List existing Docker images to verify
+        
+      - name: Tag Docker image
+        run: docker tag todo-list-app djklive/todo-list:tagname  # Tag the image with the correct repository name
+        
       - name: Push Docker image to registry
-        run: |
-          docker tag todo-list djklive/todo-list:tagname
-          docker push djklive/todo-list:tagname  # Pousse l'image vers le registre
+        run: docker push djklive/todo-list:tagname  # Push the image to the registry    
+
+      
 
       #- name: Deploy with Docker Compose
       #  run: |
